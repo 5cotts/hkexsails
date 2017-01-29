@@ -1,0 +1,17 @@
+version: '2'
+services:
+  hkex_mongo:
+    image: mongo
+    ports:
+      - 27017
+    command: mongod --directoryperdb   
+    
+  hkexsails:
+    depends_on:
+      - hkex_mongo
+    image: twhtang/hkexsails
+    ports:
+      - 1337
+    env_file:
+      - ./.env
+      - ../.env

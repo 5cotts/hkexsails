@@ -1,0 +1,28 @@
+{
+  "name": "hkexsails",
+  "version": "0.0.1",
+  "description": "Web Service API to get HKEX news",
+  "scripts": {
+    "test": "mocha test/bootstrap.test.coffee test/unit/**/*.coffee"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twhtanghk/hkexsails.git"
+  },
+  "author": "Tommy Tang <twhtanghk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twhtanghk/hkexsails/issues"
+  },
+  "homepage": "https://github.com/twhtanghk/hkexsails#readme",
+  "dependencies": {
+    "helmet-csp": "^2.3.0",
+    "hkex": "0.0.5",
+    "sails": "^0.12.11",
+    "sails-mongo": "^0.12.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
