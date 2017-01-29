@@ -8,11 +8,9 @@ module.exports =
 
     code:
       type: 'string'
-      required: true
 
     name:
       type: 'string'
-      required: true
 
     type:
       type: 'string'

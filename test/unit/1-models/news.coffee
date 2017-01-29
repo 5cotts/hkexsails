@@ -2,7 +2,7 @@ Promise = require 'bluebird'
 moment = require 'moment'
 hkex = require('hkex')
   lang: 'ch'
-  dtStart: moment().subtract 2, 'd'
+  dtStart: moment().subtract 3, 'd'
 
 describe 'models', ->
 
@@ -17,13 +17,14 @@ describe 'models', ->
               .then (record) ->
                 if record?
                   return Promise.reject existed
-                sails.modles.news
+                sails.models.news
                   .create info
                   .toPromise() 
           Promise.all [data, result]
         .then (processed) ->
           [data, result] = processed
           if data.hasNext
+            data.models = []
             hkex = data.$fetch()
             return get()
         .catch (err) ->
