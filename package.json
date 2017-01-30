@@ -19,6 +19,7 @@
   "dependencies": {
     "helmet-csp": "^2.3.0",
     "hkex": "0.0.5",
+    "oauth2_client": "0.0.1",
     "sails": "^0.12.11",
     "sails-mongo": "^0.12.2"
   },
