@@ -11,7 +11,6 @@ needle = Promise.promisifyAll require 'needle'
   'SCOPE'
   'ALERT_DETAIL'
   'NOTIFYURL'
-  'FROM'
   'TO'
 ].map (name) ->
   if not (name of process.env)
@@ -59,16 +58,16 @@ module.exports =
       type: 'date'
 
   beforeCreate: (values, cb) ->
-    if values.typeDetail?.match process.env.ALERT_DETAIL
+    if values.typeDetail?.match new RegExp process.env.ALERT_DETAIL
       oauth2
         .token process.env.TOKENURL, client, user, scope
         .then (token) ->
-          headers =
+          opts = headers:
             Authorization: "Bearer #{token}"
           msg =
             to: process.env.TO
             body: JSON.stringify values
-          needle.requestAsync 'post', process.env.NOTIFYURL, msg, headers: headers
+          needle.postAsync process.env.NOTIFYURL, msg, opts
         .then (res) ->
           if res.statusCode != 201
             sails.log.error res.body.toString()
