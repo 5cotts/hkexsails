@@ -59,7 +59,7 @@ module.exports =
       type: 'date'
 
   beforeCreate: (values, cb) ->
-    if values.typeDetail.match ALERT_DETAIL
+    if values.typeDetail?.match process.env.ALERT_DETAIL
       oauth2
         .token process.env.TOKENURL, client, user, scope
         .then (token) ->
@@ -71,7 +71,5 @@ module.exports =
           needle.requestAsync 'post', process.env.NOTIFYURL, msg, headers: headers
         .then (res) ->
           if res.statusCode != 201
-            Promise.reject res.body
-        .then ->
-          cb()
-        .catch cb
+            sails.log.error res.body.toString()
+    cb()
