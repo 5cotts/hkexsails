@@ -9,7 +9,7 @@ services:
   hkexsails:
     depends_on:
       - hkex_mongo
-    image: twhtang/hkexsails
+    image: twhtanghk/hkexsails
     ports:
       - 1337
     env_file:

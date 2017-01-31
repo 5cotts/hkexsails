@@ -1,4 +1,6 @@
 oauth2 = require 'oauth2_client'
+Promise = require 'bluebird'
+needle = Promise.promisifyAll require 'needle'
 
 [
   'TOKENURL'
@@ -7,7 +9,10 @@ oauth2 = require 'oauth2_client'
   'USER_ID'
   'USER_SECRET'
   'SCOPE'
-  'DETAIL_ALERT'
+  'ALERT_DETAIL'
+  'NOTIFYURL'
+  'FROM'
+  'TO'
 ].map (name) ->
   if not (name of process.env)
     throw new Error "process.env.#{name} not yet defined"
@@ -19,7 +24,7 @@ user =
   id: process.env.USER_ID
   secret: process.env.USER_SECRET
 scope = process.env.SCOPE.split ' '
-detail_alert = process.env.DETAIL_ALERT
+detail_alert = process.env.ALERT_DETAIL
 
 module.exports =
 
@@ -54,8 +59,19 @@ module.exports =
       type: 'date'
 
   beforeCreate: (values, cb) ->
-    if values.typeDetail.match DETAIL_ALERT
+    if values.typeDetail.match ALERT_DETAIL
       oauth2
         .token process.env.TOKENURL, client, user, scope
         .then (token) ->
-          needle.
+          headers =
+            Authorization: "Bearer #{token}"
+          msg =
+            to: process.env.TO
+            body: JSON.stringify values
+          needle.requestAsync 'post', process.env.NOTIFYURL, msg, headers: headers
+        .then (res) ->
+          if res.statusCode != 201
+            Promise.reject res.body
+        .then ->
+          cb()
+        .catch cb

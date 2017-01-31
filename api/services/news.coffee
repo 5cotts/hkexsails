@@ -1,14 +1,14 @@
 Promise = require 'bluebird'
 moment = require 'moment'
-hkex = require('hkex')
-  lang: 'ch'
-  dtStart: moment().subtract 4, 'd'
+existed = new Error 'existed'
 
-describe 'models', ->
+module.exports =
+  get: (dtStart = moment()) ->
+    hkex = require('hkex')
+      lang: 'ch'
+      dtStart: dtStart
 
-  it 'create record', ->
-    existed = new Error 'existed'
-    get = ->
+    page = ->
       hkex
         .then (data) ->
           result = Promise.mapSeries data.models, (info) ->
@@ -26,10 +26,10 @@ describe 'models', ->
           if data.hasNext
             data.models = []
             hkex = data.$fetch()
-            return get()
+            return page()
         .catch (err) ->
           if err == existed
             return Promise.resolve()
           Promise.reject err
 
-    get()
+    page()
