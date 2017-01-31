@@ -4,6 +4,8 @@ existed = new Error 'existed'
 
 module.exports =
   get: (dtStart = moment()) ->
+    sails.log.info "sails.services.news.get #{dtStart.toString()}"
+
     hkex = require('hkex')
       lang: 'ch'
       dtStart: dtStart
