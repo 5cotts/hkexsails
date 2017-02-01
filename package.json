@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Web Service API to get HKEX news",
   "scripts": {
+    "start": "node app.js --prod",
     "test": "mocha test/bootstrap.test.coffee test/unit/**/*.coffee"
   },
   "main": "app.js",
