@@ -4,7 +4,11 @@ services:
     image: mongo
     ports:
       - 27017
+    volumes:
+      - ${COMPOSEROOT}/hkexsails/data:/data/db
     command: mongod --directoryperdb   
+    env_file:
+      ../.env
     
   hkexsails:
     depends_on:
