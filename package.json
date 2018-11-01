@@ -19,7 +19,7 @@
   "homepage": "https://github.com/twhtanghk/hkexsails#readme",
   "dependencies": {
     "helmet-csp": "^2.3.0",
-    "hkex": "0.0.5",
+    "hkex": "0.0.6",
     "node-schedule": "^1.2.0",
     "oauth2_client": "0.0.1",
     "sails": "^0.12.11",
