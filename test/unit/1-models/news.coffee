@@ -33,3 +33,9 @@ describe 'models', ->
           Promise.reject err
 
     get()
+
+  it 'im connection', ->
+    sails.models.news
+      .create
+        title: '內幕消息'
+        releasedAt: new Date()

@@ -61,9 +61,9 @@ module.exports =
     # check if typeDetails, type, or title matched ALERT_DETAIL
     match = (values) ->
       r = new RegExp process.env.ALERT_DETAIL
-      values.typeDetail?.match r or values.type?.match r or values.title?match r
+      values.typeDetail?.match(r) or values.type?.match(r) or values.title?.match(r)
     if match values
-      oauth2
+      return oauth2
         .token process.env.TOKENURL, client, user, scope
         .then (token) ->
           opts = headers:
@@ -75,4 +75,7 @@ module.exports =
         .then (res) ->
           if res.statusCode != 201
             sails.log.error res.body.toString()
+        .then ->
+          cb()
+        .catch cb
     cb()
